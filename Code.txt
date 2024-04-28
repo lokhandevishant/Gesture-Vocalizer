@@ -1,0 +1,60 @@
+#include <Wire.h>
+#include <MPU6050.h>
+#include <SoftwareSerial.h>
+
+// Define pins for Bluetooth module
+#define BT_RX 2 // Connect HC-05 TX pin to Arduino Nano pin 2
+#define BT_TX 3 // Connect HC-05 RX pin to Arduino Nano pin 3
+
+// Define Bluetooth communication
+SoftwareSerial BTSerial(BT_RX, BT_TX);
+
+// Initialize MPU6050
+MPU6050 mpu;
+
+void setup() {
+  // Initialize Serial communication for debugging
+  Serial.begin(9600);
+  
+  // Initialize Bluetooth communication
+  BTSerial.begin(9600);
+  
+  // Initialize MPU6050
+  Wire.begin();
+  mpu.initialize();
+  
+  // Verify MPU6050 connection
+  Serial.println(mpu.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
+}
+
+void loop() {
+  // Read accelerometer data
+  int16_t ax, ay, az;
+  mpu.getAcceleration(&ax, &ay, &az);
+  
+  // Detect hand gestures based on accelerometer data
+  if (ay > 10000) {
+    sendGesture("I want water"); // Send "Up" gesture over Bluetooth
+  } else if (ay < -10000) {
+    sendGesture("I want food"); // Send "Down" gesture over Bluetooth
+  } else if (ax > 10000)  {
+    sendGesture("I want to cross the road"); // Send "Right" gesture over Bluetooth
+  } else if (ax < -10000) {
+    sendGesture("I want to go home"); // Send "Left" gesture over Bluetooth
+  } else if (az < -10000) {
+    sendGesture("Have a seat"); 
+  } else if (az > 10000)  {
+    sendGesture("I understand what you are saying");
+  }
+
+  
+  // Add more gesture detection logic as needed
+  
+  delay(1500); // Adjust delay as needed for responsiveness
+}
+
+// Function to send gesture data over Bluetooth
+void sendGesture(String gesture) {
+  BTSerial.println(gesture);
+  Serial.println(gesture);
+}
