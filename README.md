@@ -3,4 +3,4 @@ The Arduino Nano was programmed using the Arduino IDE and was used to make the s
 
 Publication: http://www.journal-iiie-india.com/1_apr_24/9.6_apr.pdf
 
-![Circuit Diagram of the System](Circuit Diagram.png)
+![Circuit Diagram of the System](https://github.com/lokhandevishant/Gesture-Vocalizer/blob/main/Circuit%20Diagram.png)
