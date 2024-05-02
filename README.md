@@ -9,5 +9,6 @@ Circuit Diagram of the System:
    
    
 Prototype:
-![Smart Glove](https://github.com/lokhandevishant/Gesture-Vocalizer/blob/main/Glove.png)
+
+![Smart Glove]()
 
